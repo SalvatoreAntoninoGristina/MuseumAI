@@ -37,15 +37,12 @@ st.write("""
 In questa **webapp** è possibile selezionare una foto scattata ad un **oggetto** durante la visita al museo
 e ottenere una descrizione fornita dall'intelligenza artificiale ***MuseumAI***
 """)
-
-
 uploaded_file = st.file_uploader("Scegli una foto")
+
 if uploaded_file is not None:
     # To read file as bytes:
     bytes_data = uploaded_file.getvalue()
-    
     image = exifCheck(bytes_data)
-    
     st.image(image, caption='Immagine preprocessata')
     image.save("selected_img.jpg")
     
@@ -62,10 +59,8 @@ if uploaded_file is not None:
 
     response = requests.request("POST", url, headers=headers, data=payload, files=files)
 
-
     url_get = "http://127.0.0.1:8000/get_images/"
     
-
     response_get = requests.request("GET", url_get)
 
     img = Image.open(io.BytesIO(response_get.content))
