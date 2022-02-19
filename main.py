@@ -1,4 +1,3 @@
-
 from fastapi import FastAPI, File, UploadFile
 from fastapi.responses import Response
 import os
@@ -24,7 +23,7 @@ modelli = load_cfgs(create_initial_cfgs(),'3.0')
 
 @app.post("/post_images/")
 async def create_upload_file(file: UploadFile = File(...)):
-
+    
     image = await file.read()
     
     async with aiofiles.open(image_name , "wb") as f:
@@ -32,7 +31,8 @@ async def create_upload_file(file: UploadFile = File(...)):
     
     feed_forward(image_name, modelli)
     
-    return FileResponse(image_name, media_type="image/jpg")
+    #return FileResponse(image_name, media_type="image/jpg")
+
 
 
 @app.get("/get_images/")
@@ -40,9 +40,3 @@ async def read_random_file():
 
     return FileResponse(image_name)
 
-class City(BaseModel):
-    name: str
-
-@app.post("/test_post")
-def create_city(city: City):
-    return city
